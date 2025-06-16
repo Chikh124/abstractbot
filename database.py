@@ -251,11 +251,6 @@ def add_admin_column():
     except sqlite3.OperationalError as e:
         print(f"Помилка: {e}")
 
-def get_user_id_by_ticket(ticket_id):
-    cursor.execute('SELECT user_id FROM tickets WHERE ticket_id = ?', (ticket_id,))
-    result = cursor.fetchone()
-    print(f"Отримано user_id для тікета {ticket_id}: {result}")  # Додаємо логування
-    return result[0] if result else None
 
 
 def check_connection():

@@ -568,37 +568,20 @@ async def cmd_close_ticket(message: types.Message):
             cursor.execute('UPDATE tickets SET status = ? WHERE ticket_id = ?', ('closed', ticket_id))
             conn.commit()
 
-            async def cmd_close_ticket(message: types.Message):
-                user_language = get_user_language(message.from_user.id)  # Отримуємо мову користувача
-                parts = message.text.split(maxsplit=1)  # /close <ticket_id>
-
-                if len(parts) == 2:
-                    try:
-                        ticket_id = int(parts[1])
-                        # Оновлюємо статус тікета на "closed"
-                        cursor.execute('UPDATE tickets SET status = ? WHERE ticket_id = ?', ('closed', ticket_id))
-                        conn.commit()
-
-                        if user_language == 'uk':
-                            await message.answer(f"Тікет #{ticket_id} успішно закрито.")
-                        else:
-                            await message.answer(f"Тикет #{ticket_id} успешно закрыт.")
-                    except ValueError:
-                        if user_language == 'uk':
-                            await message.answer("Неправильний формат. Використовуйте: /close <ticket_id>")
-                        else:
-                            await message.answer("Неправильный формат. Используйте: /close <ticket_id>")
-                else:
-                    if user_language == 'uk':
-                        await message.answer("Неправильний формат. Використовуйте: /close <ticket_id>")
-                    else:
-                        await message.answer("Неправильный формат. Используйте: /close <ticket_id>")
-
-            await message.answer(f"Тікет #{ticket_id} успішно закрито.")
+            if user_language == 'uk':
+                await message.answer(f"Тікет #{ticket_id} успішно закрито.")
+            else:
+                await message.answer(f"Тикет #{ticket_id} успешно закрыт.")
         except ValueError:
-            await message.answer("Неправильний формат. Використовуйте: /close <ticket_id>")
+            if user_language == 'uk':
+                await message.answer("Неправильний формат. Використовуйте: /close <ticket_id>")
+            else:
+                await message.answer("Неправильный формат. Используйте: /close <ticket_id>")
     else:
-        await message.answer("Неправильний формат. Використовуйте: /close <ticket_id>")
+        if user_language == 'uk':
+            await message.answer("Неправильний формат. Використовуйте: /close <ticket_id>")
+        else:
+            await message.answer("Неправильный формат. Используйте: /close <ticket_id>")
 
 # Обробник для закриття тікета через callback-кнопку (для користувача)
 
